@@ -109,4 +109,4 @@ def extract_and_save_experiment_methods():
         save_extracted_data(experiment['id'], extracted_method)
 
 if __name__ == "__main__":
-    extract_and_save_experiment_methods()
+    extract_and_save_experiment_methods.serve(name="Experiment Method Extractor")

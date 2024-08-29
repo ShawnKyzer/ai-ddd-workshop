@@ -37,6 +37,8 @@ services:
       POSTGRES_PORT: 5432
     volumes:
       - ./src:/app/src
+    ports:
+      - "4200:4200"
 
 volumes:
   postgres_data:
