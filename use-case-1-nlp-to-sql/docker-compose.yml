@@ -1,0 +1,44 @@
+services:
+
+  langflow:
+    image: langflowai/langflow:1.0.14
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./app_data/langflow:/root/.langflow
+    environment:
+      - LANGFLOW_AUTO_LOGIN=true
+      - DO_NOT_TRACK=true
+      - LANGFLOW_DATABASE_URL=postgresql://genaiuser:genaipassword@postgres:5432/genaidb
+    depends_on:
+      - postgres
+
+  ollama:
+    image: ollama/ollama:0.3.4
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama:/root/.ollama
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        ollama serve &
+        sleep 10
+        ollama pull llama3:latest
+        wait
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: genaidb
+      POSTGRES_USER: genaiuser
+      POSTGRES_PASSWORD: genaipassword
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data/
+
+volumes:
+  ollama:
+  postgres:
