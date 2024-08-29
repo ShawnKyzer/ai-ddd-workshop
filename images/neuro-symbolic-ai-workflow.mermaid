@@ -1,0 +1,26 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#5d4037', 'primaryTextColor': '#fff', 'primaryBorderColor': '#7c4dff', 'lineColor': '#009688', 'secondaryColor': '#ffc107', 'tertiaryColor': '#f44336'}}}%%
+
+graph TD
+    A[Use Case 1: Natural Language Data Querying]:::usecase --> B[Structured Data]:::data
+    B --> C[Use Case 2: Data Extraction and Analysis]:::usecase
+    C --> D[Domain-Specific Data]:::data
+    D --> E[Use Case 3: Domain-Specific Model Creation]:::usecase
+    E --> F[Supervised Fine-Tuned Model]:::model
+    F --> G[Use Case 4: Neurosymbolic Experiment Planner]:::usecase
+    H[Knowledge Graph / Symbolic AI]:::symbolic --> G
+    G --> I[LLM: Generate Experiment Permutations]:::process
+    I --> J[Symbolic Reasoning: Apply Rules]:::process
+    J --> K[Valid Experiment Plans]:::output
+    L[User Input: Natural Language Query]:::input --> A
+    A --> G
+    K --> M[Refined Experiment Plans]:::output
+    M --> N[User Review and Feedback]:::feedback
+
+    classDef usecase fill:#5d4037,stroke:#7c4dff,stroke-width:2px,color:#fff
+    classDef data fill:#64b5f6,stroke:#1976d2,stroke-width:2px,color:#000
+    classDef model fill:#81c784,stroke:#4caf50,stroke-width:2px,color:#000
+    classDef symbolic fill:#ffb74d,stroke:#ff9800,stroke-width:2px,color:#000
+    classDef process fill:#ba68c8,stroke:#9c27b0,stroke-width:2px,color:#fff
+    classDef output fill:#4db6ac,stroke:#009688,stroke-width:2px,color:#000
+    classDef input fill:#e57373,stroke:#f44336,stroke-width:2px,color:#000
+    classDef feedback fill:#fff176,stroke:#ffc107,stroke-width:2px,color:#000
