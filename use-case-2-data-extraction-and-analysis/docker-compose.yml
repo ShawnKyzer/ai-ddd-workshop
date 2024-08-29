@@ -13,10 +13,16 @@ services:
     image: ollama/ollama:latest
     ports:
       - "11435:11434"
-    command: sh -c "ollama serve & sleep 10 && ollama pull mistral:7b && wait"
     volumes:
       - ollama_data:/root/.ollama
-      
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        ollama serve &
+        sleep 10
+        ollama pull mistral:7b
+        wait
+
   app:
     build:
       context: .
