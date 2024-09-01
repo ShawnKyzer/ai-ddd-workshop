@@ -10,4 +10,5 @@ pytest-cov~=3.0
 pytest-mock>=1.7.1, <2.0
 ruff~=0.1.8
 scikit-learn==1.5.1
-fsspec==2023.12.2P
+pandas==2.2.2
+pyarrow==17.0.0

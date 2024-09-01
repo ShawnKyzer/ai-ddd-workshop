@@ -1,0 +1,18 @@
+experiments_table:
+  type: pandas.SQLTableDataset
+  credentials: db_credentials
+  table_name: experiments
+  load_args:
+    index_col: id
+
+raw_training_data:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/raw_training_data.parquet
+
+processed_training_data:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/processed_training_data.parquet
+
+data_with_prompts:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/data_with_prompts.parquet
