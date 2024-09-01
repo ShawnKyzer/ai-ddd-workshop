@@ -18,7 +18,8 @@ data_with_prompts:
   filepath: data/03_primary/data_with_prompts.parquet
 
 prepared_dataset:
-  type: MemoryDataset
+  type: pandas.ParquetDataset
+  filepath: data/04_feature/prepared_dataset.parquet
 
 model:
   type: MemoryDataset

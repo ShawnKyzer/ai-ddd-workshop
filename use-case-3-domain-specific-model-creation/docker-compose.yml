@@ -23,17 +23,17 @@ services:
         ollama pull mistral:7b
         wait
 
-#   app:
-#     build:
-#       context: .
-#       dockerfile: docker/Dockerfile
-#     volumes:
-#       - ./domain-specific-model-pipeline:/app/domain-specific-model-pipeline
-#     ports:
-#       - "4141:4141"
-# #    environment:
-# #      - KEDRO_ENV=docker
-#     command: ["kedro", "viz", "--host", "0.0.0.0"]
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./domain-specific-model-pipeline:/app/domain-specific-model-pipeline
+    ports:
+      - "4141:4141"
+#    environment:
+#      - KEDRO_ENV=docker
+    command: ["kedro", "viz", "--host", "0.0.0.0"]
 
 
 volumes:

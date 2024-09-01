@@ -21,5 +21,8 @@ accelerate==0.33.0
 datasets==2.21.0
 trl==0.10.1
 
-
+#login to hf or access via pvt token
 huggingface_hub
+
+# .env file loading
+python-dotenv==1.0.1

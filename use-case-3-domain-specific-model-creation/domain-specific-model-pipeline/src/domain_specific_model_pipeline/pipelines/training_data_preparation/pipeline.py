@@ -21,7 +21,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=generate_prompts,
-                inputs=["processed_training_data", "params:mistral_api"],
+                inputs=["processed_training_data", "params:llm_api"],
                 outputs="data_with_prompts",
                 name="generate_prompts_node",
             ),

@@ -1,7 +1,10 @@
+import os
 import pandas as pd
 import json
 import requests
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def extract_data_from_postgres(experiments_table: pd.DataFrame) -> pd.DataFrame:
     raw_data = experiments_table.reset_index()[['id', 'extracted_method']]
@@ -21,7 +24,7 @@ def prepare_training_data(raw_data: pd.DataFrame) -> pd.DataFrame:
 
 def generate_prompts(processed_data: pd.DataFrame, params: dict) -> pd.DataFrame:
     API_URL = params["url"]
-    API_KEY = params["token"]
+    API_KEY = os.environ.get("LLM_API_TOKEN")
 
     # Define the prompt template
     prompt_template = """

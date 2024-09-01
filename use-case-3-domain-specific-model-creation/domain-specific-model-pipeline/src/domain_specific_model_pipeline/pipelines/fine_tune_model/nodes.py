@@ -12,7 +12,6 @@ def prepare_data(data):
     # Create the messages column with system and user roles
     def process(example):
         messages = [
-            {"role": "system", "content": "You are a helpful AI assistant."},
             {"role": "user", "content": example["generated_prompt"]},
             {"role": "assistant", "content": example["formatted_method"]}
         ]
