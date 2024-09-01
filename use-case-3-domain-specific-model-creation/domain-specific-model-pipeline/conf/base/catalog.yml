@@ -16,3 +16,15 @@ processed_training_data:
 data_with_prompts:
   type: pandas.ParquetDataset
   filepath: data/03_primary/data_with_prompts.parquet
+
+prepared_dataset:
+  type: MemoryDataset
+
+model:
+  type: MemoryDataset
+
+tokenizer:
+  type: MemoryDataset
+
+trained_model:
+  type: MemoryDataset
