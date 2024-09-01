@@ -23,22 +23,18 @@ services:
         ollama pull mistral:7b
         wait
 
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: docker/Dockerfile
-  #   depends_on:
-  #     - postgres
-  #     - ollama
-  #   env_file:
-  #     - config/database.env
-  #   environment:
-  #     POSTGRES_HOST: postgres
-  #     POSTGRES_PORT: 5432
-  #   volumes:
-  #     - ./src:/app/src
-  #   ports:
-  #     - "4200:4200"
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./domain-specific-model-pipeline:/app/domain-specific-model-pipeline
+    ports:
+      - "4141:4141"
+#    environment:
+#      - KEDRO_ENV=docker
+    command: ["kedro", "viz", "--host", "0.0.0.0"]
+
 
 volumes:
   postgres_data:
