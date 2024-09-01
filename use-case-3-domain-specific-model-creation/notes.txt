@@ -1,0 +1,6 @@
+take real data + use the real data to produce more synthetic data from another model 
+use this final instruct set to then fine tune another model LoRA etc 
+
+
+Installation notes: 
+install vscode extension command: ext install kedro.Kedro

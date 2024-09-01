@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:13
+    env_file:
+      - config/database.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/setup_database.sql:/docker-entrypoint-initdb.d/setup_database.sql
+    ports:
+      - "5432:5432"
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        ollama serve &
+        sleep 10
+        ollama pull mistral:7b
+        wait
+
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/Dockerfile
+  #   depends_on:
+  #     - postgres
+  #     - ollama
+  #   env_file:
+  #     - config/database.env
+  #   environment:
+  #     POSTGRES_HOST: postgres
+  #     POSTGRES_PORT: 5432
+  #   volumes:
+  #     - ./src:/app/src
+  #   ports:
+  #     - "4200:4200"
+
+volumes:
+  postgres_data:
+  ollama_data:
