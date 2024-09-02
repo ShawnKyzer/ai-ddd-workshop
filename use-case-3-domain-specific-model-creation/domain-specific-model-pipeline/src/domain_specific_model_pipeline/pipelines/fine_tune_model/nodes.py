@@ -4,6 +4,7 @@ from datasets import Dataset
 from peft import LoraConfig, prepare_model_for_kbit_training
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from trl import SFTTrainer, SFTConfig
+import pandas as pd
 
 def prepare_data(data):
     # Convert the pandas DataFrame to a Hugging Face Dataset
@@ -52,6 +53,14 @@ def setup_model_and_tokenizer(model_name):
     return model, tokenizer
 
 def train_model(model, tokenizer, train_dataset, eval_dataset, output_dir):
+    
+    # Convert pandas DataFrames to Hugging Face Datasets
+    if isinstance(train_dataset, pd.DataFrame):
+        train_dataset = Dataset.from_pandas(train_dataset)
+    if isinstance(eval_dataset, pd.DataFrame):
+        eval_dataset = Dataset.from_pandas(eval_dataset)
+    
+    
     # Set up LoRA configuration
     peft_config = LoraConfig(
         lora_alpha=16,
