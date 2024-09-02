@@ -1,10 +1,34 @@
 import torch
+import os
+import multiprocessing
 import json
-from datasets import Dataset
+from datasets import load_dataset, Dataset
 from peft import LoraConfig, prepare_model_for_kbit_training
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    BitsAndBytesConfig,
+    set_seed
+)
 from trl import SFTTrainer, SFTConfig
-import pandas as pd
+
+def setup_environment():
+    set_seed(1234)
+    if torch.cuda.is_bf16_supported():
+        os.system('pip install flash_attn')
+        compute_dtype = torch.bfloat16
+        attn_implementation = 'flash_attention_2'
+    else:
+        compute_dtype = torch.float16
+        attn_implementation = 'sdpa'
+    return compute_dtype, attn_implementation
+
+def create_tokenizer(model_name):
+    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+    tokenizer.pad_token = "<|finetune_right_pad_id|>"
+    tokenizer.pad_token_id = 128004
+    tokenizer.padding_side = 'right'
+    return tokenizer
 
 def prepare_data(data):
     # Convert the pandas DataFrame to a Hugging Face Dataset
@@ -28,41 +52,21 @@ def prepare_data(data):
     
     return dataset.map(add_eos)
 
-def setup_model_and_tokenizer(model_name):
-    # Set up tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
-    tokenizer.pad_token = "<|finetune_right_pad_id|>"
-    tokenizer.pad_token_id = 128004
-    tokenizer.padding_side = 'right'
-
-    # Set up model with quantization
+def create_model(model_name, compute_dtype, attn_implementation):
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_compute_dtype=compute_dtype,
         bnb_4bit_use_double_quant=True,
     )
     model = AutoModelForCausalLM.from_pretrained(
-        model_name, 
-        quantization_config=bnb_config, 
-        device_map={"": 0}, 
-        attn_implementation='flash_attention_2'
+        model_name, quantization_config=bnb_config, device_map={"": 0}, attn_implementation=attn_implementation
     )
-    model = prepare_model_for_kbit_training(model)
+    model = prepare_model_for_kbit_training(model, gradient_checkpointing_kwargs={'use_reentrant': True})
+    return model
 
-    return model, tokenizer
-
-def train_model(model, tokenizer, train_dataset, eval_dataset, output_dir):
-    
-    # Convert pandas DataFrames to Hugging Face Datasets
-    if isinstance(train_dataset, pd.DataFrame):
-        train_dataset = Dataset.from_pandas(train_dataset)
-    if isinstance(eval_dataset, pd.DataFrame):
-        eval_dataset = Dataset.from_pandas(eval_dataset)
-    
-    
-    # Set up LoRA configuration
-    peft_config = LoraConfig(
+def create_peft_config():
+    return LoraConfig(
         lora_alpha=16,
         lora_dropout=0.05,
         r=16,
@@ -71,18 +75,21 @@ def train_model(model, tokenizer, train_dataset, eval_dataset, output_dir):
         target_modules=['k_proj', 'q_proj', 'v_proj', 'o_proj', "gate_proj", "down_proj", "up_proj"]
     )
 
-    # Set up training arguments
-    training_arguments = SFTConfig(
-        output_dir=output_dir,
+def create_training_arguments():
+    return SFTConfig(
+        output_dir="./Llama3.1_8b_QLoRA_right/",
         eval_strategy="steps",
         do_eval=True,
         optim="paged_adamw_8bit",
         per_device_train_batch_size=8,
         gradient_accumulation_steps=4,
         per_device_eval_batch_size=8,
+        log_level="debug",
+        save_strategy="epoch",
         logging_steps=25,
         learning_rate=1e-4,
-        bf16=True,
+        fp16=not torch.cuda.is_bf16_supported(),
+        bf16=torch.cuda.is_bf16_supported(),
         eval_steps=25,
         num_train_epochs=1,
         warmup_ratio=0.1,
@@ -91,20 +98,14 @@ def train_model(model, tokenizer, train_dataset, eval_dataset, output_dir):
         max_seq_length=512,
     )
 
-    # Set up trainer
+def train_model(model, dataset, peft_config, tokenizer, training_arguments):
     trainer = SFTTrainer(
         model=model,
-        train_dataset=train_dataset,
-        eval_dataset=eval_dataset,
+        train_dataset=dataset['train'],
+        eval_dataset=dataset['test'],
         peft_config=peft_config,
         tokenizer=tokenizer,
         args=training_arguments,
     )
-
-    # Train the model
     trainer.train()
-
-    return trainer.model
-
-def save_model(model, output_dir):
-    model.save_pretrained(output_dir)
+    return trainer
