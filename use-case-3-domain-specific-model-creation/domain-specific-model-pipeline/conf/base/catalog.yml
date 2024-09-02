@@ -17,15 +17,29 @@ data_with_prompts:
   type: pandas.ParquetDataset
   filepath: data/03_primary/data_with_prompts.parquet
 
-prepared_dataset:
-  type: pandas.ParquetDataset
-  filepath: data/04_feature/prepared_dataset.parquet
-
 model:
   type: MemoryDataset
 
 tokenizer:
   type: MemoryDataset
 
-trained_model:
+compute_dtype:
   type: MemoryDataset
+
+attn_implementation:
+  type: MemoryDataset
+
+prepared_dataset:
+  type: pandas.ParquetDataset
+  filepath: data/04_feature/prepared_dataset.parquet
+
+peft_config:
+  type: MemoryDataset
+
+training_arguments:
+  type: MemoryDataset
+
+trained_model:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/trained_model.pkl
+  versioned: true
