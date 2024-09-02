@@ -30,8 +30,7 @@ attn_implementation:
   type: MemoryDataset
 
 prepared_dataset:
-  type: pandas.ParquetDataset
-  filepath: data/04_feature/prepared_dataset.parquet
+  type: MemoryDataset
 
 peft_config:
   type: MemoryDataset
@@ -40,6 +39,4 @@ training_arguments:
   type: MemoryDataset
 
 trained_model:
-  type: pickle.PickleDataset
-  filepath: data/07_model_output/trained_model.pkl
-  versioned: true
+  type: MemoryDataset

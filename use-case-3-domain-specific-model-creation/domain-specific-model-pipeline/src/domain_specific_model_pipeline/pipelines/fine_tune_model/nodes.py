@@ -101,11 +101,15 @@ def create_training_arguments():
 def train_model(model, dataset, peft_config, tokenizer, training_arguments):
     trainer = SFTTrainer(
         model=model,
-        train_dataset=dataset['train'],
-        eval_dataset=dataset['test'],
+        train_dataset=dataset,
+        eval_dataset=dataset,
         peft_config=peft_config,
         tokenizer=tokenizer,
         args=training_arguments,
     )
     trainer.train()
+    
+    # Push the model to Hugging Face Hub
+    trainer.model.push_to_hub("shawnkyzer/llama3.1-qlora-eln", use_auth_token=True)
+
     return trainer
