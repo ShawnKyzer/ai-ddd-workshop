@@ -46,7 +46,3 @@ peft_model:
 
 merged_model:
   type: MemoryDataset
-
-# Parameters
-parameters:
-  type: MemoryDataset
