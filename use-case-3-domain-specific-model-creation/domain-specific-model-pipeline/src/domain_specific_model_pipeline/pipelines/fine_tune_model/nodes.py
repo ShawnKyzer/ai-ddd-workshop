@@ -111,15 +111,17 @@ def train_model(model, dataset, peft_config, tokenizer, training_arguments):
     )
     trainer.train()
     
-    # Push the model to Hugging Face Hub
-    #trainer.model.push_to_hub("shawnkyzer/llama3.1-qlora-eln", use_auth_token=True)
+    # Get the trained PEFT model
+    peft_model = trainer.model
+    
+    # Get the base model (without PEFT adaptations)
+    base_model = peft_model.get_base_model()
+    
+    return base_model, peft_model
 
-    return trainer
-
-#Merge into original model 
-def merge_and_push_model(model, peft_model, model_name, push_to_hub=True):
+def merge_and_push_model(base_model, peft_model, model_name, push_to_hub=True):
     # Merge LoRA adapter with the base model
-    merged_model = PeftModel.merge_and_unload(model, peft_model)
+    merged_model = PeftModel.merge_and_unload(base_model, peft_model)
     
     # Save the merged model
     merged_model.save_pretrained("./merged_model")

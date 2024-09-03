@@ -34,7 +34,7 @@ def create_pipeline(**kwargs):
             node(
                 func=create_model,
                 inputs=["params:model_name", "compute_dtype", "attn_implementation"],
-                outputs="model",
+                outputs="base_model",
                 name="create_model_node",
             ),
             node(
@@ -51,13 +51,13 @@ def create_pipeline(**kwargs):
             ),
             node(
                 func=train_model,
-                inputs=["model", "prepared_dataset", "peft_config", "tokenizer", "training_arguments"],
-                outputs=["trained_model", "peft_model"],
+                inputs=["base_model", "prepared_dataset", "peft_config", "tokenizer", "training_arguments"],
+                outputs=["trained_base_model", "trained_peft_model"],
                 name="train_model_node",
             ),
             node(
                 func=merge_and_push_model,
-                inputs=["model", "peft_model", "params:model_name"],
+                inputs=["trained_base_model", "trained_peft_model", "params:model_name"],
                 outputs="merged_model",
                 name="merge_and_push_model_node",
             ),
