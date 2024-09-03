@@ -119,26 +119,28 @@ def train_model(model, dataset, peft_config, tokenizer, training_arguments):
     
     return base_model, peft_model
 
-def merge_and_push_model(model_name, peft_model_path, push_to_hub=True):
+def merge_and_push_model(model_name, adapter_path, compute_dtype, attn_implementation, push_to_hub=False):
     # Load the base model
-    base_model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", trust_remote_code=True)
+    base_model = AutoModelForCausalLM.from_pretrained(
+        model_name, 
+        device_map="auto",
+        trust_remote_code=True,
+        torch_dtype=compute_dtype,
+        attn_implementation=attn_implementation
+    )
     
     # Load the PEFT model
-    peft_config = PeftConfig.from_pretrained(peft_model_path)
-    peft_model = PeftModel.from_pretrained(base_model, peft_model_path)
+    model = PeftModel.from_pretrained(base_model, adapter_path)
     
-    # Merge LoRA adapter with the base model
-    for name, param in peft_model.named_parameters():
-        if "lora" in name:
-            base_param_name = name.replace("base_model.model.", "")
-            base_param = base_model.get_parameter(base_param_name)
-            base_param.data += param.data.to(base_param.device)
+    # Merge and unload
+    merged_model = model.merge_and_unload()
     
     # Save the merged model
-    base_model.save_pretrained("./merged_model")
+    output_dir = "./merged_model"
+    merged_model.save_pretrained(output_dir)
     
     if push_to_hub:
         # Push the merged model to Hugging Face Hub
-        base_model.push_to_hub(f"shawnkyzer/{model_name}-merged", use_auth_token=True)
+        merged_model.push_to_hub(f"shawnkyzer/{model_name.split('/')[-1]}-merged", use_auth_token=True)
     
-    return "./merged_model"
+    return output_dir
