@@ -119,7 +119,7 @@ def train_model(model, dataset, peft_config, tokenizer, training_arguments):
     
     return base_model, peft_model
 
-def merge_and_push_model(model_name, adapter_path, compute_dtype, attn_implementation, push_to_hub=False):
+def merge_and_push_model(model_name, adapter_path, compute_dtype, attn_implementation):
     # Load the base model
     base_model = AutoModelForCausalLM.from_pretrained(
         model_name, 
@@ -139,8 +139,7 @@ def merge_and_push_model(model_name, adapter_path, compute_dtype, attn_implement
     output_dir = "./merged_model"
     merged_model.save_pretrained(output_dir)
     
-    if push_to_hub:
-        # Push the merged model to Hugging Face Hub
-        merged_model.push_to_hub(f"shawnkyzer/{model_name.split('/')[-1]}-merged", use_auth_token=True)
+
+    merged_model.push_to_hub(f"shawnkyzer/{model_name.split('/')[-1]}-merged", use_auth_token=True)
     
     return output_dir

@@ -57,7 +57,7 @@ def create_pipeline(**kwargs):
             ),
             node(
                 func=merge_and_push_model,
-                inputs=["params:model_name", "adapter_path", "compute_dtype", "attn_implementation", "params:push_to_hub"],
+                inputs=["params:model_name", "adapter_path", "compute_dtype", "attn_implementation"],
                 outputs="merged_model_path",
                 name="merge_and_push_model_node",
             ),
