@@ -137,10 +137,17 @@ def merge_and_push_model(model_name, adapter_path, compute_dtype, attn_implement
     # Merge and unload
     merged_model = model.merge_and_unload()
     
-    # Save the merged model
+     # Load the tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    
+    # Save the merged model and tokenizer
     output_dir = "./merged_model"
     merged_model.save_pretrained(output_dir)
-
-    merged_model.push_to_hub(f"shawnkyzer/{model_name.split('/')[-1]}-merged", use_auth_token=True)
+    tokenizer.save_pretrained(output_dir)
+    
+    # Push both the model and tokenizer to the Hub
+    merged_model_name = f"shawnkyzer/{model_name.split('/')[-1]}-merged"
+    merged_model.push_to_hub(merged_model_name, use_auth_token=True)
+    tokenizer.push_to_hub(merged_model_name, use_auth_token=True)
     
     return output_dir
