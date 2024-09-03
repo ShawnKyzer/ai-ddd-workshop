@@ -40,3 +40,13 @@ training_arguments:
 
 trained_model:
   type: MemoryDataset
+
+peft_model:
+  type: MemoryDataset
+
+merged_model:
+  type: MemoryDataset
+
+# Parameters
+parameters:
+  type: MemoryDataset

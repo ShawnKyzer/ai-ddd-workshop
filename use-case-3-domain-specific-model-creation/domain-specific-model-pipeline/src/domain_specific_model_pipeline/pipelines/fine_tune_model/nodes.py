@@ -11,6 +11,8 @@ from transformers import (
     set_seed
 )
 from trl import SFTTrainer, SFTConfig
+from peft import PeftModel
+
 
 def setup_environment():
     set_seed(1234)
@@ -110,6 +112,20 @@ def train_model(model, dataset, peft_config, tokenizer, training_arguments):
     trainer.train()
     
     # Push the model to Hugging Face Hub
-    trainer.model.push_to_hub("shawnkyzer/llama3.1-qlora-eln", use_auth_token=True)
+    #trainer.model.push_to_hub("shawnkyzer/llama3.1-qlora-eln", use_auth_token=True)
 
     return trainer
+
+#Merge into original model 
+def merge_and_push_model(model, peft_model, model_name, push_to_hub=True):
+    # Merge LoRA adapter with the base model
+    merged_model = PeftModel.merge_and_unload(model, peft_model)
+    
+    # Save the merged model
+    merged_model.save_pretrained("./merged_model")
+    
+    if push_to_hub:
+        # Push the merged model to Hugging Face Hub
+        merged_model.push_to_hub(f"shawnkyzer/{model_name}-merged", use_auth_token=True)
+    
+    return merged_model

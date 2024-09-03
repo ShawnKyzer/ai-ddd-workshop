@@ -5,8 +5,8 @@ from .nodes import (
     prepare_data,
     create_model,
     create_peft_config,
-    create_training_arguments,
-    train_model
+    train_model,
+    merge_and_push_model
 )
 
 def create_pipeline(**kwargs):
@@ -43,16 +43,16 @@ def create_pipeline(**kwargs):
                 name="create_peft_config_node",
             ),
             node(
-                func=create_training_arguments,
-                inputs=None,
-                outputs="training_arguments",
-                name="create_training_arguments_node",
-            ),
-            node(
                 func=train_model,
                 inputs=["model", "prepared_dataset", "peft_config", "tokenizer", "training_arguments"],
-                outputs="trained_model",
+                outputs=["trained_model", "peft_model"],
                 name="train_model_node",
+            ),
+            node(
+                func=merge_and_push_model,
+                inputs=["model", "peft_model", "params:model_name"],
+                outputs="merged_model",
+                name="merge_and_push_model_node",
             ),
         ]
     )
