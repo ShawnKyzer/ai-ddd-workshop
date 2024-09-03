@@ -114,10 +114,12 @@ def train_model(model, dataset, peft_config, tokenizer, training_arguments):
     # Get the trained PEFT model
     peft_model = trainer.model
     
-    # Get the base model (without PEFT adaptations)
-    base_model = peft_model.get_base_model()
+    # Save the PEFT model and return the path
+    adapter_path = "./peft_model"
+    peft_model.save_pretrained(adapter_path)
     
-    return base_model, peft_model
+    return adapter_path
+
 
 def merge_and_push_model(model_name, adapter_path, compute_dtype, attn_implementation):
     # Load the base model
@@ -138,7 +140,6 @@ def merge_and_push_model(model_name, adapter_path, compute_dtype, attn_implement
     # Save the merged model
     output_dir = "./merged_model"
     merged_model.save_pretrained(output_dir)
-    
 
     merged_model.push_to_hub(f"shawnkyzer/{model_name.split('/')[-1]}-merged", use_auth_token=True)
     
