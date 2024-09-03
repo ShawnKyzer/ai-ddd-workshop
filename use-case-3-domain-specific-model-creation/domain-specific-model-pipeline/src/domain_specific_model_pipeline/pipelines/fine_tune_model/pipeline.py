@@ -5,6 +5,7 @@ from .nodes import (
     prepare_data,
     create_model,
     create_peft_config,
+    create_training_arguments,
     train_model,
     merge_and_push_model
 )
@@ -41,6 +42,12 @@ def create_pipeline(**kwargs):
                 inputs=None,
                 outputs="peft_config",
                 name="create_peft_config_node",
+            ),
+            node(
+                func=create_training_arguments,
+                inputs=None,
+                outputs="training_arguments",
+                name="create_training_arguments_node",
             ),
             node(
                 func=train_model,
