@@ -14,6 +14,10 @@ Throughout the workshop, we will emphasize the importance of collaboration betwe
 
 Whether you are an experienced data practitioner or just starting your AI journey, this workshop will equip you with a practical framework for designing AI architectures that deliver tangible business value. Join us as we explore the intersection of DDD and AI, and discover how this powerful combination can transform the way we build intelligent systems.
 
+### Lean Canvas 
+
+![Lean Canvas](images/lean_canvas.png)
+
 ### Workshop Flow
 
 ![Workshop Flow Diagram](images/workshop-flow-diagram.png)
