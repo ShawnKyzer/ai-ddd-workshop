@@ -14,13 +14,14 @@ pandas==2.2.2
 pyarrow==17.0.0
 
 #Fine-tuning requirements 
-bitsandbytes==0.43.3
+torch
+bitsandbytes
 transformers==4.44.2
 peft==0.12.0
 accelerate==0.33.0
 datasets==2.21.0
 trl==0.10.1
-flash-attn
+#flash-attn
 
 #login to hf or access via pvt token
 huggingface_hub
