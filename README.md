@@ -81,7 +81,5 @@ Whether you are an experienced data practitioner or just starting your AI journe
 
 ### Resources
 
-- [Workshop Slides](link-to-slides)
-- [Additional Reading on DDD and AI](link-to-reading-list)
 
 We hope you enjoy this journey into designing AI architectures with Domain-Driven Design!
