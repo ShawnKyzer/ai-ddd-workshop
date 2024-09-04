@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment Evaluation Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2 { color: #333; }
+        .experiment { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        .evaluation, .reflection { margin-top: 10px; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Experiment Evaluation Report</h1>
+
+    <h2>Generated Variants</h2>
+    {% for variant in variants %}
+        <div class="experiment">
+            <h3>Variant {{ loop.index }}</h3>
+            <pre>{{ variant.content | tojson(indent=2) }}</pre>
+            <div class="evaluation">
+                <h4>Evaluation:</h4>
+                <pre>{{ variant.evaluation | tojson(indent=2) }}</pre>
+            </div>
+            <div class="reflection">
+                <h4>Reflection:</h4>
+                <pre>{{ variant.reflection | tojson(indent=2) }}</pre>
+            </div>
+        </div>
+    {% endfor %}
+
+    <h2>Best Experiments</h2>
+    {% for exp in best_experiments %}
+        <div class="experiment">
+            <h3>Rank {{ loop.index }} (Score: {{ "%.2f"|format(exp.score) }})</h3>
+            <pre>{{ exp.content | tojson(indent=2) }}</pre>
+            <div class="reflection">
+                <h4>Reflection:</h4>
+                <pre>{{ exp.reflection | tojson(indent=2) }}</pre>
+            </div>
+        </div>
+    {% endfor %}
+</body>
+</html>

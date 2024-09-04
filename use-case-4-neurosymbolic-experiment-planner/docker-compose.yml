@@ -1,0 +1,30 @@
+services:
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=none
+    volumes:
+      - ./neo4j/data:/data
+      - ./neo4j/logs:/logs
+      - ./neo4j/import:/var/lib/neo4j/import
+      - ./neo4j/plugins:/plugins
+  
+  ollama:
+    image: ollama/ollama:0.3.4
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama:/root/.ollama
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        ollama serve &
+        sleep 10
+        ollama pull llama3.1:latest
+        wait
+
+volumes:
+  ollama:
