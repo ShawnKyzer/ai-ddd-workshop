@@ -81,5 +81,36 @@ Whether you are an experienced data practitioner or just starting your AI journe
 
 ### Resources
 
+### Resources
+
+* **Articles & Blogs**
+  * Domain-Driven Design in Practice: Crafting an AI Assistant Step-by-Step, [https://opendatascience.com/domain-driven-design-in-practice-crafting-an-ai-assistant-step-by-step/](https://opendatascience.com/domain-driven-design-in-practice-crafting-an-ai-assistant-step-by-step/)
+  * AlphaProof, AlphaGeometry, ChatGPT, and why the future of AI is neurosymbolic, Gary Marcus, [https://garymarcus.substack.com/p/alphaproof-alphageometry-chatgpt](https://garymarcus.substack.com/p/alphaproof-alphageometry-chatgpt)
+  * AI achieves silver-medal standard solving International Mathematical Olympiad problems, [https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/?utm_source=x&utm_medium=social&utm_campaign=&utm_content=](https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/?utm_source=x&utm_medium=social&utm_campaign=&utm_content=)
+  * La Plateforme with Mistral AI. Mistral AI News. [https://mistral.ai/news/la-plateforme/](https://mistral.ai/news/la-plateforme/)
+
+* **Books**
+  * Evans, E. (2003). Domain-Driven Design: Tackling Complexity in the Heart of Software. Addison-Wesley Professional.
+
+* **Documentation & Guides**
+  * Docker Desktop Installation Guide. Docker Documentation. [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
+
+* **GitHub Repositories**
+  * DDD Starter Modelling Process. [https://github.com/ddd-crew/ddd-starter-modelling-process](https://github.com/ddd-crew/ddd-starter-modelling-process)
+  * LangChain. [https://github.com/langchain-ai](https://github.com/langchain-ai)
+
+* **Official Websites**
+  * Langflow. [https://www.langflow.org/](https://www.langflow.org/)
+  * Ollama. [https://ollama.com/](https://ollama.com/)
+  * Prefect. [https://www.prefect.io/](https://www.prefect.io/)
+  * Kedro. [https://kedro.readthedocs.io/](https://kedro.readthedocs.io/)
+
+* **Other**
+  * Event Storming. Wikipedia. [https://en.wikipedia.org/wiki/Event_storming](https://en.wikipedia.org/wiki/Event_storming)
+  * ODSC Workshop: Designing AI Architectures with Domain-Driven Design: A Use Case-Centric Approach. ODSC Speakers. [https://odsc.com/speakers/designing-ai-architectures-with-domain-driven-design-a-use-case-centric-approach/](https://odsc.com/speakers/designing-ai-architectures-with-domain-driven-design-a-use-case-centric-approach/)
+  * Fowler, M. Domain Driven Design. Martin Fowler’s Bliki. [https://martinfowler.com/bliki/DomainDrivenDesign.html](https://martinfowler.com/bliki/DomainDrivenDesign.html)
+  * The Next Decade in AI: Four Steps Towards Robust Artificial Intelligence, Gary Marcus [https://arxiv.org/pdf/2002.06177](https://arxiv.org/pdf/2002.06177)
+
+And many more hiding in the requirements.txt!
 
 We hope you enjoy this journey into designing AI architectures with Domain-Driven Design!
