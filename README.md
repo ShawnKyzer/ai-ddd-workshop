@@ -85,6 +85,7 @@ Whether you are an experienced data practitioner or just starting your AI journe
 
 * **Articles & Blogs**
   * Domain-Driven Design in Practice: Crafting an AI Assistant Step-by-Step, [https://opendatascience.com/domain-driven-design-in-practice-crafting-an-ai-assistant-step-by-step/](https://opendatascience.com/domain-driven-design-in-practice-crafting-an-ai-assistant-step-by-step/)
+  * The Kaitchup – AI on a Budget, [https://newsletter.kaitchup.com/](https://newsletter.kaitchup.com/)
   * AlphaProof, AlphaGeometry, ChatGPT, and why the future of AI is neurosymbolic, Gary Marcus, [https://garymarcus.substack.com/p/alphaproof-alphageometry-chatgpt](https://garymarcus.substack.com/p/alphaproof-alphageometry-chatgpt)
   * AI achieves silver-medal standard solving International Mathematical Olympiad problems, [https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/?utm_source=x&utm_medium=social&utm_campaign=&utm_content=](https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/?utm_source=x&utm_medium=social&utm_campaign=&utm_content=)
   * La Plateforme with Mistral AI. Mistral AI News. [https://mistral.ai/news/la-plateforme/](https://mistral.ai/news/la-plateforme/)
