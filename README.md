@@ -66,7 +66,7 @@ Whether you are an experienced data practitioner or just starting your AI journe
 
 1. Clone this repository:
    ```
-   git clone https://github.com/your-username/ai-ddd-workshop.git
+   git clone https://github.com/ShawnKyzer/ai-ddd-workshop.git
    ```
 2. Navigate to the project directory:
    ```
