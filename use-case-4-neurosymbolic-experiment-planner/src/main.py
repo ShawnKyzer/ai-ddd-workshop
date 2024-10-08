@@ -8,6 +8,17 @@ import json
 
 load_dotenv()
 
+def write_json_report(variants, best_experiments):
+    report_data = {
+        "variants": variants,
+        "best_experiments": best_experiments
+    }
+    
+    with open('experiment_report.json', 'w') as f:
+        json.dump(report_data, f, indent=2)
+    
+    print("JSON report generated: experiment_report.json")
+
 def main():
     db = Neo4jDatabase(os.getenv('NEO4J_URI'), os.getenv('NEO4J_USER'), os.getenv('NEO4J_PASSWORD'))
     rules = db.get_experiment_rules()
@@ -58,6 +69,9 @@ def main():
 
     # Generate HTML report
     generate_html_report(variants, best_experiments)
+
+    # Generate JSON report
+    write_json_report(variants, best_experiments)
 
     db.close()
 
