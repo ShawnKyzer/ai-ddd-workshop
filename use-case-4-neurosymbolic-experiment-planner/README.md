@@ -1,7 +1,7 @@
 # AI-Powered Experiment Generator 🧪🤖
 
 <p align="center">
-  <a href="https://your-streamlit-demo-url.com" target="_blank">
+  <a href="https://experiment-planner.streamlit.app/" target="_blank">
     <img src="https://img.shields.io/badge/Try%20Demo-🧬%20🔬%20🧫-blue?style=for-the-badge" alt="Try Demo" >
   </a>
 </p>
